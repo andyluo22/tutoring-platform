@@ -1,0 +1,59 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# --------------------------
+# Node / pnpm
+# --------------------------
+/node_modules/            # root (if any)
+/frontend/node_modules/   # workspace frontend
+.pnpm-debug.log*          # pnpm error logs
+
+# --------------------------
+# Python / backend
+# --------------------------
+/backend/venv/            # Python virtual env
+
+# --------------------------
+# Build / output
+# --------------------------
+/coverage/                # test coverage
+/frontend/.next/          # Next.js dev build
+/frontend/out/            # Next.js export output
+/build/                   # generic production build folder
+/dist/                    # alternative build dir
+
+# --------------------------
+# Logs
+# --------------------------
+npm-debug.log*  
+yarn-debug.log*  
+pnpm-debug.log*
+
+# --------------------------
+# Env files
+# --------------------------
+.env
+.env.*.local
+
+# --------------------------
+# Frameworks / Platforms
+# --------------------------
+.vercel/                 # Vercel
+.next/                   # Next.js (if run at root)
+
+# --------------------------
+# TypeScript
+# --------------------------
+*.tsbuildinfo
+next-env.d.ts
+
+# --------------------------
+# Editors / OS
+# --------------------------
+.vscode/                 
+.idea/                   
+.DS_Store                
+
+# --------------------------
+# Misc
+# --------------------------
+*.pem                    # certificates

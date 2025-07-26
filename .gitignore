@@ -1,0 +1,17 @@
+# Node
+node_modules/
+pnpm-lock.yaml
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# Docker
+.env
+*.sqlite3
+
+# Editor
+.DS_Store
+.vscode/
+.idea/
