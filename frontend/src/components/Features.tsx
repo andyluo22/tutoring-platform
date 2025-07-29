@@ -13,7 +13,7 @@ const FEATURES = [
   {
     title: 'Flexible Booking',
     desc: 'Choose Zoom, Discord, or custom call types.',
-    icon: '/icons/calendar.svg',
+    icon: '/icons/collabing.svg',
   },
   {
     title: 'AI-Powered Q&A',
