@@ -17,7 +17,7 @@ export function Hero() {
     >
       {/* Parallax background */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 bg-[url('/backgrounds/stars.svg')] bg-cover opacity-50"
         style={{ y: bgOffset }}
         aria-hidden="true"
       />
@@ -49,13 +49,22 @@ export function Hero() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <Button size="lg" asChild>
+        <Button
+          size="lg"
+          asChild
+          className="hover:-translate-y-1 transform transition"
+        >
           <Link href="/signup" aria-label="Sign up for free">
             Get Started
           </Link>
         </Button>
 
-        <Button variant="outline" size="lg" asChild>
+        <Button
+          variant="outline"
+          size="lg"
+          asChild
+          className="hover:-translate-y-1 transform transition"
+        >
           <Link href="#features" aria-label="Learn more about features">
             Learn More
           </Link>

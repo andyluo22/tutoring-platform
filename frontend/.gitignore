@@ -57,3 +57,8 @@ next-env.d.ts
 # Misc
 # --------------------------
 *.pem                    # certificates
+.next/
+node_modules/
+dist/
+*.log
+.env*
