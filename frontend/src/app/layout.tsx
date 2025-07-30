@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
+import { ClerkProvider } from '@clerk/nextjs';
 import { ThemeProvider } from 'next-themes';
 import { Header } from '@/components/Header';
 import Link from 'next/link';
@@ -18,10 +19,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="bg-white text-gray-900 antialiased">
         <ClientOnly>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Header />
-            <main className="pt-24">{children}</main>
-          </ThemeProvider>
+          <ClerkProvider
+            frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API!}
+            publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
+          >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Header />
+              <main className="pt-24">{children}</main>
+            </ThemeProvider>
+          </ClerkProvider>
         </ClientOnly>
       </body>
     </html>
