@@ -23,7 +23,6 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          # Health-check must hard-code the user; it can’t use ${{ secrets... }} here
           --health-cmd "pg_isready -U andyluo"
           --health-interval 10s
           --health-timeout 5s
@@ -62,3 +61,4 @@ jobs:
 
       - name: Enforce coverage threshold
         run: coverage report --fail-under=90
+
