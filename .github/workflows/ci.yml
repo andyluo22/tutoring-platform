@@ -23,7 +23,8 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U ${{ secrets.POSTGRES_USER }}"
+          # Health-check must hard-code the user; it can’t use ${{ secrets... }} here
+          --health-cmd "pg_isready -U andyluo"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
