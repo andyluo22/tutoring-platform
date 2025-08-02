@@ -46,11 +46,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install fastapi uvicorn
-          python install --upgrade pip
+          # Upgrade pip
+          python -m pip install --upgrade pip
+          # Install FastAPI and Uvicorn
+          pip install fastapi uvicorn
+          # Install project dependencies
           pip install \
             sqlalchemy[asyncio] asyncpg alembic httpx \
-            pytest pytest-asyncio pytest-cov pydantic[email] pydantic-settings
+            pytest pytest-asyncio pytest-cov \
+            pydantic[email] pydantic-settings
 
       - name: Run Alembic migrations
         run: alembic upgrade head
@@ -66,4 +70,3 @@ jobs:
 
       - name: Enforce coverage threshold
         run: coverage report --fail-under=90
-
