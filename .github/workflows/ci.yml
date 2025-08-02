@@ -48,9 +48,11 @@ jobs:
             pytest pytest-asyncio pytest-cov pydantic[email]
 
       - name: Run Alembic migrations
+        working-directory: backend
         run: alembic upgrade head
 
       - name: Run tests & collect coverage
+        working-directory: backend
         run: |
           pytest \
             --cov=app \
@@ -60,5 +62,6 @@ jobs:
             --maxfail=1 -q
 
       - name: Enforce coverage threshold
+        working-directory: backend
         run: coverage report --fail-under=90
 
