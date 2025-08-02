@@ -52,7 +52,7 @@ jobs:
           pip install fastapi uvicorn
           # Install project dependencies
           pip install \
-            sqlalchemy[asyncio] asyncpg alembic httpx \
+            sqlalchemy[asyncio] asyncpg alembic httpx aiosqlite\
             pytest pytest-asyncio pytest-cov \
             pydantic[email] pydantic-settings
 
