@@ -9,10 +9,11 @@
     "eslint-config-next": "15.4.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.3",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.11"
   },
   "scripts": {
     "format": "prettier --write .",
-    "lint":   "cd frontend && eslint . --ext .ts,.tsx --fix"
+    "lint": "cd frontend && eslint . --ext .ts,.tsx --fix"
   }
 }
