@@ -1,5 +1,6 @@
 # app/config.py
-from pydantic import PostgresDsn, ConfigDict, BaseSettings
+from pydantic import PostgresDsn, ConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     DATABASE_URL: PostgresDsn 
