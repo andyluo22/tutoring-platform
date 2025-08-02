@@ -1,0 +1,48 @@
+from pydantic import BaseModel, EmailStr, ConfigDict
+from datetime import datetime
+from typing import Optional
+
+# ── User ───────────────────────────────────────
+class UserCreate(BaseModel):
+    email: EmailStr
+    name: str
+    role: Optional[str] = "student"
+
+class UserRead(BaseModel):
+    id: int
+    email: EmailStr
+    name: str
+    role: str
+    created_at: datetime
+
+    model_config = ConfigDict(env_file=".env")
+
+# ── Session ────────────────────────────────────
+class SessionCreate(BaseModel):
+    user_id: int
+    start_time: datetime
+    end_time: datetime
+
+class SessionRead(BaseModel):
+    id: int
+    user_id: int
+    start_time: datetime
+    end_time: datetime
+    created_at: datetime
+
+    model_config = ConfigDict(env_file=".env")
+
+# ── Booking ────────────────────────────────────
+class BookingCreate(BaseModel):
+    user_id: int
+    session_id: int
+    call_type: str
+
+class BookingRead(BaseModel):
+    id: int
+    user_id: int
+    session_id: int
+    call_type: str
+    created_at: datetime
+
+    model_config = ConfigDict(env_file=".env")
