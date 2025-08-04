@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, Variants } from 'framer-motion';
 import Image from 'next/image';
 
 const FEATURES = [
@@ -26,12 +26,12 @@ export function Features() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
 
-  const container = {
+  const container: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.2 } },
   };
 
-  const card = {
+  const card: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
