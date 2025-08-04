@@ -20,7 +20,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-white text-gray-900 antialiased">
         <ClientOnly>
           <ClerkProvider
-            frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API!}
             publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
           >
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
