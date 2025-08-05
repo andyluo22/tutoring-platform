@@ -4,12 +4,6 @@ import { useAuth } from '@clerk/nextjs';
 import { BellIcon, MenuIcon } from 'lucide-react';
 import DarkModeToggle from './DarkModeToggle';
 
-// File: frontend/src/components/dashboard/Topbar.tsx
-('use client');
-import { useAuth } from '@clerk/nextjs';
-import { BellIcon, MenuIcon } from 'lucide-react';
-import DarkModeToggle from './DarkModeToggle';
-
 export default function Topbar({
   onMenuToggle,
 }: {
