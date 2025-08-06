@@ -46,3 +46,16 @@ class BookingRead(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(env_file=".env")
+
+# ── Class (recurring / fixed-schedule) ────────────────────────────────
+class ClassRead(BaseModel):
+    id: str
+    title: str
+    day_of_week: int        # 0 = Sunday … 6 = Saturday
+    start_time: datetime
+    end_time: datetime
+    price_per_seat: float
+    max_participants: int
+    current_bookings: int
+
+    model_config = ConfigDict(env_file=".env")

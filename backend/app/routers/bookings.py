@@ -7,7 +7,7 @@ from ..database import get_db
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 
 @router.post(
-    "/",
+    "",
     response_model=schemas.BookingRead,
     status_code=status.HTTP_201_CREATED,
 )

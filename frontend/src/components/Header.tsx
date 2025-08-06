@@ -13,7 +13,7 @@ export function Header() {
     <header className="fixed w-full z-50 bg-white/90 backdrop-blur-lg shadow">
       <nav className="container mx-auto flex items-center justify-between p-4">
         <Link href="/" className="text-2xl font-bold">
-          Andy&#39;s Classroom
+          Luorn
         </Link>
 
         {/* Desktop Menu */}

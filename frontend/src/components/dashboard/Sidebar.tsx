@@ -6,6 +6,7 @@ import { HomeIcon, CalendarIcon, UserIcon, CreditCardIcon } from 'lucide-react';
 const navItems = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
   { name: 'Sessions', href: '/dashboard/sessions', icon: CalendarIcon },
+  { name: 'Calendar', href: '/dashboard/calendar', icon: CalendarIcon },
   { name: 'Profile', href: '/dashboard/profile', icon: UserIcon },
   { name: 'Billing', href: '/dashboard/billing', icon: CreditCardIcon },
 ];

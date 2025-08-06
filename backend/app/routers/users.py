@@ -6,7 +6,7 @@ from ..database import get_db
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-@router.post("/", response_model=schemas.UserRead, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=schemas.UserRead, status_code=status.HTTP_201_CREATED)
 async def create_user_endpoint(user_in: schemas.UserCreate, db: AsyncSession = Depends(get_db)):
     return await crud.create_user(db, user_in)
 

@@ -1,0 +1,16 @@
+# backend/docker-compose.dev.yml
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: andyluo
+      POSTGRES_PASSWORD: localpass123
+      POSTGRES_DB: tutoring_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

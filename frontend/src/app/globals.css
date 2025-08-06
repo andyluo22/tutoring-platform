@@ -1,5 +1,7 @@
+/* Tailwind base */
 @import 'tailwindcss';
 
+/* Dark-mode CSS variables */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -7,8 +9,8 @@
   }
 }
 
+/* Smooth in-page scrolling */
 html {
   scroll-behavior: smooth;
 }
-
 
