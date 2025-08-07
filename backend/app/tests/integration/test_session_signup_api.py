@@ -1,4 +1,4 @@
-# backend/app/tests/test_session_signup_api.py
+# backend/app/tests/integration/test_session_signup_api.py
 
 import pytest
 from datetime import datetime, timezone
@@ -16,9 +16,10 @@ async def test_post_and_exhaust_session_signups(init_db_and_client):
 
     # 1) Create a tutor so we can create the session
     tutor = await client.post(
-        "/users/",
+        "/users",  # removed trailing slash
         json=UserCreate(email="tutor@int.com", name="Tutor").model_dump(),
     )
+    assert tutor.status_code == 201
     tutor_id = tutor.json()["id"]
 
     # 2) Create a session with capacity 2
@@ -34,7 +35,7 @@ async def test_post_and_exhaust_session_signups(init_db_and_client):
         max_participants=2,
     )
     sess_resp = await client.post(
-        "/sessions/",
+        "/sessions",  # removed trailing slash
         json=jsonable_encoder(session_payload),
     )
     assert sess_resp.status_code == 201
@@ -43,15 +44,16 @@ async def test_post_and_exhaust_session_signups(init_db_and_client):
     # 3) Sign up two different students—both should succeed
     for idx in (1, 2):
         user = await client.post(
-            "/users/",
+            "/users",  # removed trailing slash
             json=UserCreate(
                 email=f"student{idx}@int.com", name=f"Student{idx}"
             ).model_dump(),
         )
+        assert user.status_code == 201
         student_id = user.json()["id"]
 
         signup_resp = await client.post(
-            "/book-session",
+            "/book-session",  # already no slash
             json=SessionSignupCreate(
                 student_id=student_id,
                 session_id=session_id,
@@ -66,9 +68,10 @@ async def test_post_and_exhaust_session_signups(init_db_and_client):
 
     # 4) Third student should be rejected (capacity=2)
     user3 = await client.post(
-        "/users/",
+        "/users",  # removed trailing slash
         json=UserCreate(email="student3@int.com", name="Student3").model_dump(),
     )
+    assert user3.status_code == 201
     resp3 = await client.post(
         "/book-session",
         json={"student_id": user3.json()["id"], "session_id": session_id},
