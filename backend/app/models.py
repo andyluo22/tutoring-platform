@@ -12,39 +12,47 @@ class UserRole(str, enum.Enum):
     student = "student"
     tutor   = "tutor"
 
+class SessionType(str, enum.Enum):
+    one_on_one  = "one_on_one"
+    small_group = "small_group"
+    class_group = "class_group"
+
 class User(Base):
     __tablename__ = "users"
 
-    id        = Column(Integer, primary_key=True, index=True)
-    email     = Column(String, unique=True, nullable=False, index=True)
-    name      = Column(String, nullable=False)
-    role      = Column(Enum(UserRole), default=UserRole.student, nullable=False)
+    id         = Column(Integer, primary_key=True, index=True)
+    email      = Column(String, unique=True, nullable=False, index=True)
+    name       = Column(String, nullable=False)
+    role       = Column(Enum(UserRole), default=UserRole.student, nullable=False)
     created_at = Column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
 
-    sessions        = relationship("Session", back_populates="user")
+    # Link sessions via the 'tutor' relationship on Session
+    sessions        = relationship("Session", back_populates="tutor")
     bookings        = relationship("Booking", back_populates="user")
     session_signups = relationship("SessionSignup", back_populates="student")
-
 
 class Session(Base):
     __tablename__ = "sessions"
 
-    id               = Column(Integer, primary_key=True, index=True)
-    user_id          = Column(Integer, ForeignKey("users.id"), nullable=False)
+    id                   = Column(Integer, primary_key=True, index=True)
+    tutor_id             = Column(Integer, ForeignKey("users.id"), nullable=False)
 
-    # — fixed-schedule class metadata —
-    title            = Column(String, nullable=True)             # "Grade 8 Math Group"
-    day_of_week      = Column(Integer, nullable=True)            # 0=Sunday…6=Saturday
-    is_class         = Column(Boolean, default=False, nullable=False)
+    session_type         = Column(Enum(SessionType), nullable=False, default=SessionType.one_on_one)
+    title                = Column(String, nullable=True)
+    day_of_week          = Column(Integer, nullable=True)
+    start_time           = Column(DateTime(timezone=True), nullable=False)
+    end_time             = Column(DateTime(timezone=True), nullable=False)
 
-    start_time       = Column(DateTime(timezone=True), nullable=False)
-    end_time         = Column(DateTime(timezone=True), nullable=False)
-    price_per_seat   = Column(Integer, nullable=False, default=0)  # in cents
-    max_participants = Column(Integer, nullable=False, default=1)
+    price_per_seat       = Column(Integer, nullable=False, default=0)  # cents
+    max_participants     = Column(Integer, nullable=False, default=1)
+
+    zoom_link            = Column(String, nullable=True)
+    discord_channel_id   = Column(String, nullable=True)
+    discord_invite_link  = Column(String, nullable=True)
 
     created_at = Column(
         DateTime(timezone=True),
@@ -52,10 +60,10 @@ class Session(Base):
         nullable=False
     )
 
-    user    = relationship("User", back_populates="sessions")
+    # Link back to User via 'sessions'
+    tutor   = relationship("User", back_populates="sessions")
     booking = relationship("Booking", back_populates="session", uselist=False)
     signups = relationship("SessionSignup", back_populates="session")
-
 
 class Booking(Base):
     __tablename__ = "bookings"
@@ -73,16 +81,20 @@ class Booking(Base):
     user    = relationship("User", back_populates="bookings")
     session = relationship("Session", back_populates="booking")
 
-
 class SessionSignup(Base):
     __tablename__ = "session_signups"
 
-    id          = Column(Integer, primary_key=True, index=True)
-    student_id  = Column(Integer, ForeignKey("users.id"), nullable=False)
-    session_id  = Column(Integer, ForeignKey("sessions.id"), nullable=False)
-    invite_code = Column(String, unique=True, nullable=False, index=True)
-    is_paid     = Column(Boolean, default=False, nullable=False)
-    created_at  = Column(
+    id                  = Column(Integer, primary_key=True, index=True)
+    student_id          = Column(Integer, ForeignKey("users.id"), nullable=False)
+    session_id          = Column(Integer, ForeignKey("sessions.id"), nullable=False)
+
+    invite_code         = Column(String, unique=True, nullable=False, index=True)
+    is_paid             = Column(Boolean, default=False, nullable=False)
+    discord_channel_id  = Column(String, nullable=True)
+    discord_invite_link = Column(String, nullable=True)
+    stripe_session_id   = Column(String, nullable=True)
+
+    created_at = Column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
         nullable=False

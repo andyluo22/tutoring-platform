@@ -9,20 +9,20 @@ async def test_post_and_get_booking(init_db_and_client):
 
     # 1) Create user
     user_model = UserCreate(email="book@int.com", name="Booker")
-    u = await client.post("/users/", json=user_model.model_dump())
+    u = await client.post("/users", json=user_model.model_dump())
     uid = u.json()["id"]
 
     # 2) Create session
     now = datetime.now(timezone.utc)
     sess_model = SessionCreate(user_id=uid, start_time=now, end_time=now)
     sess_payload = jsonable_encoder(sess_model)
-    s = await client.post("/sessions/", json=sess_payload)
+    s = await client.post("/sessions", json=sess_payload)
     assert s.status_code == 201
     sid = s.json()["id"]
 
     # 3) Create booking → 201
     book_model = BookingCreate(user_id=uid, session_id=sid, call_type="zoom")
-    b = await client.post("/bookings/", json=book_model.model_dump())
+    b = await client.post("/bookings", json=book_model.model_dump())
     assert b.status_code == 201
 
     bid = b.json()["id"]
@@ -47,5 +47,5 @@ async def test_get_nonexistent_booking_returns_404(init_db_and_client):
 ])
 async def test_post_booking_validation_errors(init_db_and_client, payload):
     client = init_db_and_client
-    resp = await client.post("/bookings/", json=payload)
+    resp = await client.post("/bookings", json=payload)
     assert resp.status_code == 422

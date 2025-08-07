@@ -68,9 +68,6 @@ export default function BookingCalendar() {
   );
 }
 
-
-
-
 // 'use client';
 
 // import { useState, useCallback, useRef } from 'react';
@@ -197,5 +194,3 @@ export default function BookingCalendar() {
 //     </>
 //   );
 // }
-
-

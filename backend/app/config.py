@@ -4,7 +4,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     DATABASE_URL: PostgresDsn 
-    # Add other settings here (E.g SECRET_KEY)
+    FRONTEND_URL: str
+    STRIPE_API_KEY: str
+    STRIPE_WEBHOOK_SECRET: str
 
     model_config = ConfigDict(env_file=".env")
     

@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import TwoDLogo from '@/components/TwoDLogo';
+import ThreeLogo from '@/components/ThreeLogo';
 
 export function Hero() {
   const { scrollY } = useScroll();

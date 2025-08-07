@@ -16,6 +16,7 @@ async def list_classes(db: AsyncSession = Depends(get_db)):
     """
     List all fixed-schedule group classes with current booking counts.
     """
+    # Filter for class_group sessions instead of the removed is_class flag
     stmt = (
         select(
             models.Session.id,
@@ -27,8 +28,11 @@ async def list_classes(db: AsyncSession = Depends(get_db)):
             models.Session.max_participants,
             func.count(models.SessionSignup.id).label("current_bookings"),
         )
-        .outerjoin(models.SessionSignup, models.Session.id == models.SessionSignup.session_id)
-        .where(models.Session.is_class == True)
+        .outerjoin(
+            models.SessionSignup,
+            models.Session.id == models.SessionSignup.session_id
+        )
+        .where(models.Session.session_type == models.SessionType.class_group)
         .group_by(models.Session.id)
     )
     result = await db.execute(stmt)

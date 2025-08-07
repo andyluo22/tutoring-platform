@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import users, sessions, bookings, classes, book_session
+from .routers import users, sessions, bookings, classes, book_session, class_bookings, stripe_webhook
+import stripe
+from .config import settings
+
+stripe.api_key = settings.STRIPE_API_KEY
 
 app = FastAPI(title="Tutoring Platform API", version ="1.0")
 
@@ -26,3 +30,5 @@ app.include_router(sessions.router)
 app.include_router(bookings.router)
 app.include_router(classes.router)
 app.include_router(book_session.router)
+app.include_router(class_bookings.router)
+app.include_router(stripe_webhook.router)

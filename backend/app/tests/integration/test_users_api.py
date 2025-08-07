@@ -6,7 +6,7 @@ async def test_post_and_get_user(init_db_and_client):
     client = init_db_and_client
 
     # Create → 201
-    resp = await client.post("/users/", json=UserCreate(email="i@int.com", name="I").model_dump())
+    resp = await client.post("/users", json=UserCreate(email="i@int.com", name="I").model_dump())
     assert resp.status_code == 201
     data = resp.json()
     assert data["email"] == "i@int.com"
@@ -31,5 +31,5 @@ async def test_get_nonexistent_user_returns_404(init_db_and_client):
 ])
 async def test_post_user_validation_errors(init_db_and_client, payload):
     client = init_db_and_client
-    resp = await client.post("/users/", json=payload)
+    resp = await client.post("/users", json=payload)
     assert resp.status_code == 422

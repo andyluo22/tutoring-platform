@@ -1,6 +1,9 @@
+# backend/app/schemas.py
 from pydantic import BaseModel, EmailStr, ConfigDict
 from datetime import datetime
 from typing import Optional
+from .models import SessionType
+
 
 # ── User ─────────────────────────────────────────
 class UserCreate(BaseModel):
@@ -20,25 +23,31 @@ class UserRead(BaseModel):
 
 # ── Session ──────────────────────────────────────
 class SessionCreate(BaseModel):
-    user_id: int
-    title: Optional[str]
-    day_of_week: Optional[int]
-    is_class: Optional[bool] = False
+    tutor_id: int
+    session_type: SessionType
+    title: Optional[str] = None
+    day_of_week: Optional[int] = None
     start_time: datetime
     end_time: datetime
-    price_per_seat: Optional[int] = 0
-    max_participants: Optional[int] = 1
+    price_per_seat: int = 0
+    max_participants: int = 1
+    zoom_link: Optional[str] = None
+    discord_channel_id: Optional[str] = None
+    discord_invite_link: Optional[str] = None
 
 class SessionRead(BaseModel):
     id: int
-    user_id: int
+    tutor_id: int
+    session_type: SessionType
     title: Optional[str]
     day_of_week: Optional[int]
-    is_class: bool
     start_time: datetime
     end_time: datetime
     price_per_seat: int
     max_participants: int
+    zoom_link: Optional[str]
+    discord_channel_id: Optional[str]
+    discord_invite_link: Optional[str]
     created_at: datetime
 
     model_config = ConfigDict(env_file=".env")
@@ -71,7 +80,24 @@ class SessionSignupRead(BaseModel):
     session_id: int
     invite_code: str
     is_paid: bool
+    discord_channel_id: Optional[str]
+    discord_invite_link: Optional[str]
+    stripe_session_id: Optional[str]
+    stripe_checkout_url: Optional[str] = None
     created_at: datetime
+
+    model_config = ConfigDict(env_file=".env")
+
+
+# ── Join Flows ───────────────────────────────────
+class JoinClassIn(BaseModel):
+    invite_code: str
+
+class JoinClassOut(BaseModel):
+    session_id: int
+    zoom_link: Optional[str]
+    discord_invite_link: Optional[str]
+    price_per_seat: int
 
     model_config = ConfigDict(env_file=".env")
 

@@ -8,11 +8,11 @@ import axios from 'axios';
  * Ensures consistent JSON handling and auth cookies.
  */
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export default api;

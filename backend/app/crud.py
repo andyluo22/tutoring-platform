@@ -38,7 +38,7 @@ async def get_booking(db: AsyncSession, booking_id: int) -> models.Booking | Non
     result = await db.execute(select(models.Booking).where(models.Booking.id == booking_id))
     return result.scalar_one_or_none()
 
-# ── SessionSignups ──────────────────────────────
+# ── Session Signups ─────────────────────────────
 async def create_session_signup(
     db: AsyncSession,
     signup_in: schemas.SessionSignupCreate,
@@ -66,3 +66,19 @@ async def count_session_signups(db: AsyncSession, session_id: int) -> int:
         .where(models.SessionSignup.session_id == session_id)
     )
     return result.scalar_one()
+
+async def get_signup_by_code(db: AsyncSession, code: str) -> models.SessionSignup | None:
+    result = await db.execute(
+        select(models.SessionSignup)
+        .where(models.SessionSignup.invite_code == code)
+    )
+    return result.scalar_one_or_none()
+
+
+async def mark_signup_paid(db: AsyncSession, signup_id: int):
+    await db.execute(
+        update(models.SessionSignup)
+        .where(models.SessionSignup.id == signup_id)
+        .values(is_paid=True)
+    )
+    await db.commit()
