@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr, ConfigDict
 from datetime import datetime
 from typing import Optional
 
-# ── User ───────────────────────────────────────
+# ── User ─────────────────────────────────────────
 class UserCreate(BaseModel):
     email: EmailStr
     name: str
@@ -17,22 +17,34 @@ class UserRead(BaseModel):
 
     model_config = ConfigDict(env_file=".env")
 
-# ── Session ────────────────────────────────────
+
+# ── Session ──────────────────────────────────────
 class SessionCreate(BaseModel):
     user_id: int
+    title: Optional[str]
+    day_of_week: Optional[int]
+    is_class: Optional[bool] = False
     start_time: datetime
     end_time: datetime
+    price_per_seat: Optional[int] = 0
+    max_participants: Optional[int] = 1
 
 class SessionRead(BaseModel):
     id: int
     user_id: int
+    title: Optional[str]
+    day_of_week: Optional[int]
+    is_class: bool
     start_time: datetime
     end_time: datetime
+    price_per_seat: int
+    max_participants: int
     created_at: datetime
 
     model_config = ConfigDict(env_file=".env")
 
-# ── Booking ────────────────────────────────────
+
+# ── Booking ──────────────────────────────────────
 class BookingCreate(BaseModel):
     user_id: int
     session_id: int
@@ -47,14 +59,31 @@ class BookingRead(BaseModel):
 
     model_config = ConfigDict(env_file=".env")
 
-# ── Class (recurring / fixed-schedule) ────────────────────────────────
+
+# ── SessionSignup ────────────────────────────────
+class SessionSignupCreate(BaseModel):
+    student_id: int
+    session_id: int
+
+class SessionSignupRead(BaseModel):
+    id: int
+    student_id: int
+    session_id: int
+    invite_code: str
+    is_paid: bool
+    created_at: datetime
+
+    model_config = ConfigDict(env_file=".env")
+
+
+# ── ClassRead ────────────────────────────────────
 class ClassRead(BaseModel):
-    id: str
+    id: int
     title: str
-    day_of_week: int        # 0 = Sunday … 6 = Saturday
+    day_of_week: int
     start_time: datetime
     end_time: datetime
-    price_per_seat: float
+    price_per_seat: int
     max_participants: int
     current_bookings: int
 

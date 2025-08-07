@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import users, sessions, bookings, classes
+from .routers import users, sessions, bookings, classes, book_session
 
 app = FastAPI(title="Tutoring Platform API", version ="1.0")
 
@@ -25,3 +25,4 @@ app.include_router(users.router)
 app.include_router(sessions.router)
 app.include_router(bookings.router)
 app.include_router(classes.router)
+app.include_router(book_session.router)
