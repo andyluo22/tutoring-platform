@@ -93,6 +93,8 @@ class SessionSignup(Base):
     discord_channel_id  = Column(String, nullable=True)
     discord_invite_link = Column(String, nullable=True)
     stripe_session_id   = Column(String, nullable=True)
+    stripe_checkout_url = Column(String, nullable=True)
+    
 
     created_at = Column(
         DateTime(timezone=True),

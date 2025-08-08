@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import users, sessions, bookings, classes, book_session, class_bookings, stripe_webhook
+from .routers import users, sessions, bookings, classes, book_session, class_bookings, stripe_webhook, checkout, availability
 import stripe
 from .config import settings
 
@@ -32,3 +32,5 @@ app.include_router(classes.router)
 app.include_router(book_session.router)
 app.include_router(class_bookings.router)
 app.include_router(stripe_webhook.router)
+app.include_router(availability.router)
+app.include_router(checkout.router)
